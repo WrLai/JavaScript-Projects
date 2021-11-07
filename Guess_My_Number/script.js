@@ -1,13 +1,4 @@
 'use strict';
-//select method
-// NOTE DOM: Document Object Model -> change text, html attributes and even CSS styles.
-// console.log(document.querySelector('.message').textContent);
-// document.querySelector('.message').textContent = 'Correct Number!';
-// document.querySelector('.number').textContent = 13;
-// document.querySelector('.score').textContent = 10;
-// NOTE For an input field, we use .value to get the value property
-// document.querySelector('.guess').value = 23;
-// NOTE eventlistener + event handler
 let secretNumber = Math.trunc(Math.random() * 20) + 1;
 console.log(secretNumber);
 let maxScore = 0;
@@ -43,25 +34,6 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.score').textContent = score;
     }
   }
-  //   else if (guess > secretNumber) {
-  //     if (score > 0) {
-  //       document.querySelector('.message').textContent =
-  //         'Your number is higher than the secret number!';
-  //       score--;
-  //       document.querySelector('.score').textContent = score;
-  //     }
-  //     // When too low
-  //   } else if (guess < secretNumber) {
-  //     if (score > 1) {
-  //       document.querySelector('.message').textContent =
-  //         'Your number is Lower than the secret number!';
-  //       score--;
-  //       document.querySelector('.score').textContent = score;
-  //     }}
-  // when score is 0
-  //   else if (score === 0) {
-  //     displayMessage(`You LOST!`);
-  //   }
 
   if (score === 0) {
     displayMessage(`You Lost!`);
