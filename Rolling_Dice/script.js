@@ -48,8 +48,7 @@ rollDiceBtn.addEventListener('click', function () {
     diceElement.src = `dice-${dice}.png`;
     currentScore = 0;
     // If its not 1, add number to current
-    //   if (score[0] <= 100 && score[1] <= 100) {
-
+    
     if (dice !== 1) {
       currentScore = Number(
         document.getElementById(`current--${activePlayer}`).textContent
@@ -61,36 +60,6 @@ rollDiceBtn.addEventListener('click', function () {
       switchPlayer();
     }
   }
-  //   if (activePlayer === 0) {
-  //     if (dice !== 1) {
-  //       currentScore = Number(currentScore0.textContent);
-  //       currentScore += dice;
-  //       currentScore0.textContent = currentScore;
-  //     } else if (dice === 1) {
-  //       currentScore0.textContent = 0;
-  //       activePlayer = activePlayer === 1 ? 0 : 1;
-  //       player1Element.classList.toggle('player--active');
-  //       player0Element.classList.toggle('player--active');
-  //     }
-  //   } else {
-  //     if (dice !== 1) {
-  //       currentScore = Number(currentScore1.textContent);
-  //       currentScore += dice;
-  //       currentScore1.textContent = currentScore;
-  //     } else {
-  //       currentScore1.textContent = 0;
-  //       activePlayer = activePlayer === 0 ? 1 : 0;
-  //       player0Element.classList.toggle('player--active');
-  //       player1Element.classList.toggle('player--active');
-  //     }
-  //   }
-  //   }
-  // } else {
-  //   if (score[0] >= 100) {
-  //     player0Element.classList.remove('player--active');
-  //   } else {
-  //     player1Element.classList.remove('player--active');
-  //   }
 });
 
 newBtn.addEventListener('click', init);
@@ -111,22 +80,7 @@ holdBtn.addEventListener('click', function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       score[activePlayer];
     document.getElementById(`current--${activePlayer}`).textContent = 0;
-    //   activePlayer = activePlayer === 0 ? 1 : 0;
-    //   if (activePlayer === 0) {
-    //     score[0] += Number(currentScore0.textContent);
-    //     score0Element.textContent = score[0];
-    //     currentScore0.textContent = 0;
-    //     activePlayer = 1;
-    //     player0Element.classList.toggle('player--active');
-    //     player1Element.classList.toggle('player--active');
-    //   } else {
-    //     score[1] += Number(currentScore1.textContent);
-    //     score1Element.textContent = score[1];
-    //     currentScore1.textContent = 0;
-    //     activePlayer = 0;
-    //     player0Element.classList.toggle('player--active');
-    //     player1Element.classList.toggle('player--active');
-    //   }
+    
     if (score[activePlayer] >= 100) {
       console.log(`Player ${activePlayer} won!`);
       gameState = false;
