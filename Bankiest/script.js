@@ -1,14 +1,5 @@
 'use strict';
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// BANKIST APP
-
-/////////////////////////////////////////////////
-// Data
-
-// DIFFERENT DATA! Contains movement dates, currency and locale
-
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200.211, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
@@ -95,10 +86,6 @@ const formattedDate = function (date, locale) {
   }
 
   return new Intl.DateTimeFormat(locale).format(date);
-  // const day = `${date.getDate()}`.padStart(2, 0);
-  // const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  // const year = date.getFullYear();
-  // return `${day}/${month}/${year}`;
 };
 
 //
@@ -180,7 +167,6 @@ const calcDisplaySummary = function (accounts) {
     accounts.currency
   )}`;
 };
-// calcDisplaySummary(account1);
 
 //NOTE Create usernames
 // Doing side effect here
@@ -236,13 +222,6 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
-//Fake alwasy logged in NOTE NOTE
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 100;
-
-//NOTENOTE login
-// Experimenting with API
 
 btnLogin.addEventListener('click', function (e) {
   //Prevent form from submitting
@@ -267,23 +246,13 @@ btnLogin.addEventListener('click', function (e) {
       day: 'numeric',
       month: 'numeric',
       year: 'numeric',
-      // weekday: 'numeric',
     };
-    // const locale = navigator.language;
 
     labelDate.textContent = new Intl.DateTimeFormat(
       currentAccount.locale,
       options
     ).format(now);
-    //Create current date and time
-    // const now = new Date();
-    // const day = `${now.getDate()}`.padStart(2, 0);
-    // const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    // const year = now.getFullYear();
-    // const hour = `${now.getHours()}`.padStart(2, 0);
-    // const minutes = `${now.getMinutes()}`.padStart(2, 0);
-
-    // labelDate.textContent = `${day} / ${month} / ${year}, ${hour}:${minutes}`;
+    
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -301,7 +270,7 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
-//NOTE NOTE transfer
+//NOTE transfer
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
@@ -359,7 +328,7 @@ btnLoan.addEventListener('click', function (e) {
   }, 3000);
 });
 
-//NOTENOTE Close account
+//NOTE Close account
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -374,236 +343,3 @@ btnClose.addEventListener('click', function (e) {
   inputCloseUsername.value = inputClosePin.value = '';
 });
 
-//NOTE Coding challenge 4
-//Exercise 1
-const bankDepositSum = accounts
-  .flatMap(mov => mov.movements)
-  .filter(mov => mov >= 0)
-  .reduce((acc, curr) => acc + curr, 0);
-// console.log(bankDepositSum);
-const bankDepositSum2 = accounts.reduce(
-  (sum, cur) =>
-    sum + cur.movements.reduce((sum, cur) => (cur > 0 ? sum + cur : sum), 0),
-  0
-);
-// console.log(bankDepositSum2);
-const bankWithDrawal = accounts.reduce(
-  (mov, cur) =>
-    mov + cur.movements.reduce((sum, cur) => (cur < 0 ? sum + cur : sum), 0),
-  0
-);
-// console.log(bankWithDrawal);
-
-//Exercise 2
-const bankAtLeast1000 = accounts
-  .flatMap(mov => mov.movements)
-  //prefix increment!! ++sum
-  .reduce((sum, cur) => (cur >= 1000 ? ++sum : sum), 0);
-// .filter(mov => mov >= 1000).length;
-// console.log(bankAtLeast1000);
-const bankAtLeast10002 = accounts.reduce(
-  (sum, cur) =>
-    sum + cur.movements.reduce((sum, cur) => (cur >= 1000 ? ++sum : sum), 0),
-  0
-);
-// console.log(bankAtLeast10002);
-
-//Exercise 3 contains the sum of deposit and withdrawals
-const { deposits, withdrawals } = accounts
-  .flatMap(mov => mov.movements)
-  .reduce(
-    (sums, cur) => {
-      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
-      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
-      return sums;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
-// console.log(deposits, withdrawals);
-
-const { deposits2, withdrawals2 } = accounts.reduce(
-  (all, cur) => {
-    if (
-      cur.movements.reduce((sum, cura) => (cura > 0 ? sum + cura : sum), 0) > 0
-    ) {
-      all.deposits2 += cur.movements.reduce(
-        (sum, cur) => (cur > 0 ? sum + cur : sum),
-        0
-      );
-    }
-    if (
-      cur.movements.reduce((sum, cura) => (cura < 0 ? sum + cura : sum), 0) < 0
-    ) {
-      all.withdrawals2 += cur.movements.reduce(
-        (sum, cur) => (cur < 0 ? sum + cur : sum),
-        0
-      );
-    }
-    0;
-    return all;
-  },
-  { deposits2: 0, withdrawals2: 0 }
-);
-
-//NOTE Timeout exercise
-// const ingredients = ['olives', 'spinach'];
-// const timer = setTimeout(
-//   (ing1, ing2) => console.log(`Times Up! ${ing1} and ${ing2}`),
-//   1000,
-//   ...ingredients
-// );
-// console.log('Waiting');
-// if (ingredients.includes('spinach')) clearTimeout(timer);
-//setTimeout
-// setInterval(() => {
-//   console.log(
-//     Intl.DateTimeFormat(navigator.locale, { timeStyle: 'medium' }).format(
-//       new Date()
-//     )
-//   ),
-//     setTimeout(() => console.clear(), 1800);
-// }, 1000);
-// console.log(deposits2, withdrawals2);
-//Exercise 4
-// const convertTitleCase = function (title) {
-//   const capitalize = str => str[0].toUpperCase() + str.slice(1);
-//   const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
-
-//   const titleCase = title
-//     .toLowerCase()
-//     .split(' ')
-//     .map(word =>
-//       exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
-//     )
-//     .join(' ');
-//   return capitalize(titleCase);
-// };
-//NOTE Internationalizing Numbers (Intl)
-// const num = 3884764.23;
-// const options = {
-//   style: 'currency',
-//   //style: 'unit',
-//   //style: 'percent',
-//   unit: 'mile-per-hour',
-//   currency: 'EUR',
-//   useGrouping: false,
-// };
-// console.log('US:        ', new Intl.NumberFormat('en-US', options).format(num));
-
-//NOTE Creating Dates
-// const now = new Date();
-// console.log(now);
-
-// console.log(new Date(account1.movementsDates[0]));
-// console.log(new Date(2037, 11, 41, 15, 23, 5));
-// console.log(new Date(0));
-// console.log(new Date(3 * 24 * 60 * 60 * 1000));
-
-// NOTE NOTE //Working with dates
-// const future = new Date(2037, 10, 19, 15, 23);
-// const calcDaysPassed = (date1, date2) =>
-//   Math.abs(date2 - date1) / (1000 * 60 * 60 * 24);
-// const day1 = calcDaysPassed(new Date(2037, 3, 14), new Date(2037, 3, 24));
-// console.log(day1);
-// console.log(future);
-// console.log(future.getFullYear());
-// console.log(future.getMonth());
-// console.log(future.getDate());
-// console.log(future.getHours());
-// console.log(future.getMinutes());
-// console.log(future.getSeconds());
-// console.log(future.toISOString());
-// console.log(future.getTime());
-
-// console.log(new Date(future.getTime()));
-// console.log(Date.now());
-
-// future.setFullYear(2040);
-// console.log(future);
-
-//NOTE Ways to work around with numbers
-// console.log(`${Number('23')} is equal to ${+'23'}`);
-
-// console.log(`Parsing the Integer (30px) out: ${Number.parseInt('30px', 10)}`);
-// console.log(`Second Example (e23) ${Number.parseInt('e23', 10)}`);
-
-// console.log(`Parsing Float number (2.5rem): ${Number.parseFloat('2.5rem')}`);
-// console.log(`Parsing Int number (2.5rem): ${Number.parseInt('2.5rem')}`);
-
-// console.log(Number.isNaN(20));
-// console.log(Number.isNaN('20'));
-// console.log(Number.isNaN(+'20X'));
-// console.log(Number.isNaN(23 / 0));
-// // NOTE NOTEBest way to check if a value is a number
-// console.log(Number.isFinite(20));
-// console.log(Number.isFinite('20'));
-// console.log(Number.isFinite(+'20x'));
-// console.log(Number.isFinite(23 / 0));
-// console.log(Number.isInteger(23.0));
-// console.log(Number.isInteger(23.1));
-
-// console.log(Math.sqrt(25));
-// console.log('or');
-// console.log(25 ** (1 / 2));
-
-// console.log(Math.max(1, 2, 3, 4, 5, 6, 7));
-
-// console.log(Math.PI);
-
-// console.log(Math.trunc(Math.random() * 6) + 1);
-
-// // Create a number between min and max
-// const randomInt = (min, max) =>
-//   Math.floor(Math.random() * (max - min) + 1) + min;
-// console.log(randomInt(-100, 7));
-
-//NOTE Rounding Integers
-// console.log(Math.trunc(23.3));
-// console.log(Math.round(23.3));
-// console.log(Math.ceil(22.1));
-// console.log(Math.floor(23.9));
-
-// //NOTE NOTERound up to certain decimal places
-// console.log(+(2.7523123).toFixed(3));
-
-// const isEven = n =>
-//   n % 2 === 0 ? console.log(`It's even!`) : console.log(`Its Odd!`);
-
-// isEven(1241251234124);
-//NOTE Application
-// labelBalance.addEventListener('click', function () {
-//   [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
-//     if (i % 2 === 0) row.style.backgroundColor = 'orangered';
-//     if (i % 3 === 0) row.style.backgroundColor = 'blue';
-//   });
-// });
-
-//Numeric Separaters
-// const diameter = 282_399_182_897;
-
-// const price = 345_99;
-// console.log(price);
-
-// const transferFee1 = 15_00;
-// const transferfee2 = 1_500;
-
-// console.log(Number('230_000'));
-
-//NOTE BigInt -> Numbers can be stored with as large as possible
-
-// console.log(262345623451234513456134134513451n); // or BigInt(1231234125123)
-
-// const huge = 1231512312312431412312n;
-// const hum = 23;
-// console.log(huge * BigInt(hum));
-
-//Exceptions
-// console.log(20n > 15); //True
-// console.log(20n === 20); //false
-// console.log(typeof 20n); //bigint
-// console.log(20n == '20'); //true
-
-// console.log(
-//   `once the number is working with a string, it will cut the "n" part off: huge = ${huge}`
-// );
-// console.log(11n / 3n); works too, but rounds up to the nearest bigInt, result = 3n
